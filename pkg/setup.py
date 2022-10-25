@@ -4,11 +4,18 @@
 
 from setuptools import setup
 import os
+import os.path
 
-pkg_version = os.getenv("DPCPP_LLVM_SPIRV_VERSION", "unknown")
+pkg_version = os.getenv("DPCPP_LLVM_SPIRV_VERSION", "0.0.0+dev")
+
+with open(os.path.join("dpcpp_llvm_spirv", "_version.py"), "w") as fh:
+    fh.write(f"__version__ = '{pkg_version}'")
+    fh.write("\n")
+
 
 setup(
     name="dpcpp_llvm_spirv",
+    packages=["dpcpp_llvm_spirv",],
     version=pkg_version,
     author="Intel Corp.",
     author_email="scripting@intel.com",
