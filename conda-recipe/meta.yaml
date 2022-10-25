@@ -1,0 +1,57 @@
+{% set version = "2022.2.0" %}
+{% set intel_build_number = "8734" %}   # [linux]
+{% set intel_build_number = "9553" %}   # [win]
+{% set target_platform = "linux-64" %}  # [linux]
+{% set target_platform = "win-64" %}    # [win]
+
+
+# use this if our build script changes and we need to increment beyond intel's version
+{% set dst_build_number = '0' %}
+{% set build_number = intel_build_number|int + dst_build_number|int %}
+
+package:
+  name: llvm_spirv_repack_bundle
+  version: {{ version }}
+
+source:
+  - path: ../pkg/dpcpp_llvm_spirv
+    folder: package
+  - url: https://anaconda.org/intel/dpcpp_impl_{{ target_platform }}/{{ version }}/download/{{ target_platform }}/dpcpp_impl_{{ target_platform }}-{{ version }}-intel_{{ intel_build_number }}.tar.bz2  # [linux64 or win64]
+    folder: compiler
+
+build:
+  number: {{ build_number }}
+  skip: True                                  # [not (linux64 or osx or win)]
+  script_env:
+    - DPCPP_LLVM_SPIRV_VERSION={{ version }}
+
+outputs:
+  - name: dpcpp-llvm-spirv
+    requirements:
+      host:
+        - python
+        - setuptools
+      run:
+        - python
+    test:
+      commands:
+        - ls -A1 ${PREFIX}/lib/*              # [unix]
+        - dir %PREFIX%\Library\lib\*          # [win]
+        - test -x $(python -c "import dpcpp_llvm_spirv; print(dpcpp_llvm_spirv.get_llvm_spirv_path())")  # [unix]
+      imports:
+        - dpcpp_llvm_spirv
+
+about:
+    home: https://github.com/IntelPython/dpcpp-llvm-spirv.git
+    license: Intel End User License Agreement for Developer Tools
+    license_file: LICENSE
+    summary: A Python package vendoring llvm-spirv executable from Intel(R) oneAPI DPC++ compiler.
+    description: |
+      <strong>LEGAL NOTICE: Use of this software package is subject to the software license agreement (
+      as set forth above, in the license section of the installed Conda package and/or the README file) 
+      and all notices, disclaimers or license terms for third party or open source software included in or 
+      with the software.</strong> <br/><br/> 
+      EULA: <a href=\"https://software.intel.com/content/dam/develop/external/us/en/documents/pdf/intel-developer-tools-eula-09-03-19.pdf\" target=\"_blank\">
+      Intel End User License Agreement for Developer Tools</a>
+      <br/> Third Party Programs: Included in software package
+      <br/><br/>
