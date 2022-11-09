@@ -49,8 +49,11 @@ outputs:
         - dpcpp_llvm_spirv
     about:
       home: https://github.com/IntelPython/dpcpp-llvm-spirv.git
-      license: Intel End User License Agreement for Developer Tools
-      license_file: LICENSE
+      license: LicenseRef-Proprietary-Intel-End-User-License-Agreement-for-Developer-Tools
+      license_family: Proprietary
+      license_file: 
+        - license.txt
+        - tpp.txt
       summary: A Python package vendoring llvm-spirv executable from Intel(R) oneAPI DPC++ compiler.
       description: |
         <strong>LEGAL NOTICE: Use of this software package is subject to the software license agreement (
