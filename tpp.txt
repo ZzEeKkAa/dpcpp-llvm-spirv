@@ -988,7 +988,13 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------
 The following third party programs have their own third party program files. These additional third party program files are as follows:
 
-1.	Intel® Threading Building Blocks <install_dir>/ xxx/xxx/licensing/third-party-programs.txt
+1.	Intel® DAAL https://raw.githubusercontent.com/intel/oneapi-containers/master/licensing/hpckit-devel-ubuntu18.04/daal/third-party-programs.txt
+2.	Intel® IPP https://raw.githubusercontent.com/intel/oneapi-containers/master/licensing/iotkit-devel-ubuntu18.04/ipp/third-party-programs.txt
+3.	Intel® MKL https://raw.githubusercontent.com/intel/oneapi-containers/master/licensing/iotkit-devel-ubuntu18.04/mkl/en/third-party-programs.txt
+4.	Intel® MPI Library https://raw.githubusercontent.com/intel/oneapi-containers/master/licensing/iotkit-devel-ubuntu18.04/mpi/third-party-programs.txt
+5.	oneTBB https://raw.githubusercontent.com/intel/oneapi-containers/master/licensing/iotkit-devel-ubuntu18.04/tbb/third-party-programs.txt
+6.	Intel DPC++ Compiler https://github.com/intel/oneapi-containers/blob/master/licensing/basekit-ubuntu-18.04/compiler/c/third-party-programs.txt
+7.	Intel C++ Compiler https://github.com/intel/oneapi-containers/blob/master/licensing/basekit-ubuntu-18.04/compiler/c/third-party-programs.txt
 
 -------------------------------------------------------------
 Other names and brands may be claimed as the property of others.
