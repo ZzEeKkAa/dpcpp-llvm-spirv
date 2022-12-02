@@ -45,11 +45,7 @@ jobs:
     strategy:
       matrix:
         python: ["3.8", "3.9"]
-        experimental: [false]
-        include:
-          - python: "3.8"
-            experimental: true
-    continue-on-error: ${{ matrix.experimental }}
+
     env:
       CHANNELS: -c intel -c main --override-channels
       conda-bld: C:\Miniconda\conda-bld\win-64\
