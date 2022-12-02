@@ -2,9 +2,10 @@
 #
 # SPDX-License-Identifier: Proprietary
 
-from setuptools import setup
 import os
 import os.path
+
+from setuptools import setup
 
 pkg_version = os.getenv("DPCPP_LLVM_SPIRV_VERSION", "0.0.0+dev")
 
@@ -15,7 +16,9 @@ with open(os.path.join("dpcpp_llvm_spirv", "_version.py"), "w") as fh:
 
 setup(
     name="dpcpp_llvm_spirv",
-    packages=["dpcpp_llvm_spirv",],
+    packages=[
+        "dpcpp_llvm_spirv",
+    ],
     version=pkg_version,
     author="Intel Corp.",
     author_email="scripting@intel.com",
@@ -28,5 +31,5 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
     ],
-    license="Intel End User License Agreement for Developer Tools"
+    license="Intel End User License Agreement for Developer Tools",
 )
