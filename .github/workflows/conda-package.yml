@@ -45,6 +45,10 @@ jobs:
     strategy:
       matrix:
         python: ["3.8", "3.9"]
+        experimental: [false]
+        include:
+          - python: "3.8"
+            experimental: true
     continue-on-error: ${{ matrix.experimental }}
     env:
       CHANNELS: -c intel -c main --override-channels
@@ -79,3 +83,57 @@ jobs:
         with:
           name: ${{ env.PACKAGE_NAME }} ${{ runner.os }} Python ${{ matrix.python }} ${{ matrix.artifact_name }}
           path: ${{ env.conda-bld }}${{ env.PACKAGE_NAME }}-*.tar.bz2
+
+  upload_linux:
+    needs: test_linux
+    if: ${{github.ref == 'refs/heads/main' || (startsWith(github.ref, 'refs/heads/release') == true)}}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.8", "3.9"]
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.PACKAGE_NAME }} ${{ runner.os }} Python ${{ matrix.python }}
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          activate-environment: ""
+      - name: Install anaconda-client
+        run: conda install anaconda-client
+
+      - name: Upload
+        env:
+          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+        run: |
+          source /usr/share/miniconda/etc/profile.d/conda.sh
+          conda activate
+          anaconda --token $ANACONDA_TOKEN upload --user dppy --label dev ${PACKAGE_NAME}-*.tar.bz2
+
+  upload_windows:
+    needs: test_windows
+    if: ${{github.ref == 'refs/heads/main' || (startsWith(github.ref, 'refs/heads/release') == true)}}
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python: ["3.8", "3.9"]
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.PACKAGE_NAME }} ${{ runner.os }} Python ${{ matrix.python }}
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          activate-environment: ""
+      - name: Install anaconda-client
+        run: conda install anaconda-client
+
+      - name: Upload
+        env:
+          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+        run: |
+          anaconda --token ${{ env.ANACONDA_TOKEN }} upload --user dppy --label dev ${{ env.PACKAGE_NAME }}-*.tar.bz2
