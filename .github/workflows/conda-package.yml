@@ -1,4 +1,4 @@
-name: Conda package
+ame: Conda package
 
 on:
   push:
@@ -16,6 +16,10 @@ jobs:
   build_linux:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        python: ["3.8", "3.9"]
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -26,21 +30,24 @@ jobs:
 
       - name: Build conda package
         env:
-          CHANNELS: -c dppy/label/dev -c intel -c defaults --override-channels
-        run: conda build --no-test conda-recipe
+          CHANNELS: -c intel -c main --override-channels
+        run: conda build --python ${{ matrix.python }} ${{ env.CHANNELS }} -conda-recipe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.PACKAGE_NAME }} ${{ runner.os }}
+          name: ${{ env.PACKAGE_NAME }} ${{ runner.os }} Python ${{ matrix.python }}
           path: /usr/share/miniconda/conda-bld/linux-64/${{ env.PACKAGE_NAME }}-*.tar.bz2
 
   build_windows:
     runs-on: windows-latest
 
     strategy:
+      matrix:
+        python: ["3.8", "3.9"]
+    continue-on-error: ${{ matrix.experimental }}
     env:
-      CHANNELS: -c intel -c defaults -c dppy/label/dev --override-channels
+      CHANNELS: -c intel -c main --override-channels
       conda-bld: C:\Miniconda\conda-bld\win-64\
 
     steps:
@@ -59,15 +66,16 @@ jobs:
         with:
           path: /home/runner/conda_pkgs_dir
           key:
-            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{hashFiles('**/meta.yaml') }}
+            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-python-${{ matrix.python }}-${{hashFiles('**/meta.yaml') }}
           restore-keys: |
+            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-python-${{ matrix.python }}-
             ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-
       - name: Install conda-build
         run: conda install conda-build
       - name: Build conda package
-        run: conda build --no-test conda-recipe
+        run: conda build --python ${{ matrix.python }} ${{ env.CHANNELS }} conda-recipe
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.PACKAGE_NAME }} ${{ runner.os }}
+          name: ${{ env.PACKAGE_NAME }} ${{ runner.os }} Python ${{ matrix.python }} ${{ matrix.artifact_name }}
           path: ${{ env.conda-bld }}${{ env.PACKAGE_NAME }}-*.tar.bz2
