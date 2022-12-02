@@ -1,4 +1,4 @@
-ame: Conda package
+name: Conda package
 
 on:
   push:
