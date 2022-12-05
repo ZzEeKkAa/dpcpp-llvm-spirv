@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        python: ["3.8", "3.9"]
+        python: ["3.8", "3.9", "3.10"]
 
     steps:
       - uses: actions/checkout@v3
@@ -44,7 +44,7 @@ jobs:
 
     strategy:
       matrix:
-        python: ["3.8", "3.9"]
+        python: ["3.8", "3.9", "3.10"]
 
     env:
       CHANNELS: -c intel -c main --override-channels
@@ -86,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ["3.8", "3.9"]
+        python: ["3.8", "3.9", "3.10"]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -114,7 +114,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        python: ["3.8", "3.9"]
+        python: ["3.8", "3.9", "3.10"]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v2
