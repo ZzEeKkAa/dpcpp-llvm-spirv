@@ -8,12 +8,10 @@ It provides `dpcpp_llvm_spirv.get_llvm_spirv_path()` function to query the path 
 """
 
 from ._helper import get_llvm_spirv_path
+
 try:
-   from ._version import __version__
+    from ._version import __version__
 except ModuleNotFoundError:
     __version__ = "0.0.0+dev"
 
-__all__ = [
-    "get_llvm_spirv_path",
-    "__version__"
-]
+__all__ = ["get_llvm_spirv_path", "__version__"]
