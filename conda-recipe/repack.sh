@@ -5,6 +5,9 @@ src="${SRC_DIR}"
 echo "Python: ${PYTHON}"
 [ -z "${PYTHON}" ] && exit 1
 
+export DPCPP_LLVM_SPIRV_VERSION=$(${PYTHON} get_icpx_version.py)
+echo -e "Inferred DPCPP_LLVM_SPIRV_VERSION=${DPCPP_LLVM_SPIRV_VERSION}"
+
 pushd $src/package
 ${PYTHON} setup.py install --single-version-externally-managed --record=llvm_spirv_record.txt
 cat llvm_spirv_record.txt

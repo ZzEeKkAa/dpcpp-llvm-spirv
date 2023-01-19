@@ -1,6 +1,6 @@
-{% set version = "2022.2.0" %}
-{% set intel_build_number = "8734" %}   # [linux64]
-{% set intel_build_number = "9553" %}   # [win64]
+{% set version = "2023.0.0" %}
+{% set intel_build_number = "25370" %}   # [linux]
+{% set intel_build_number = "25922" %}   # [win]
 {% set target_platform = "linux-64" %}  # [linux64]
 {% set target_platform = "win-64" %}    # [win64]
 
@@ -16,8 +16,8 @@ source:
   - path: ../pkg
     folder: package
   - url: https://anaconda.org/intel/dpcpp_impl_{{ target_platform }}/{{ version }}/download/{{ target_platform }}/dpcpp_impl_{{ target_platform }}-{{ version }}-intel_{{ intel_build_number }}.tar.bz2  # [linux64 or win64]
-    md5: d3f94ed6c4dc5b97bebb8d088ccd58b8  # [win64]
-    md5: 0d6865e2c2586577d048608d533f7713  # [linux64]
+    md5: 0acd44eea158cf828f7f1058f6fc85da  # [win64]
+    md5: 5217aa49f13b313a0e357aef6a182264  # [linux64]
     folder: compiler
   - path: ..
 
@@ -25,8 +25,6 @@ source:
 build:
   number: {{ build_number }}
   skip: True                                  # [not (linux64 or osx or win)]
-  script_env:
-    - DPCPP_LLVM_SPIRV_VERSION={{ version }}
   missing_dso_whitelist:
     - '*'
 
