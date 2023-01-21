@@ -1,4 +1,7 @@
 
+set /P DPCPP_LLVM_SPIRV_VERSION < %PYTHON% get_icpx_version.py
+echo "Inferred DPCPP_LLVM_SPIRV_VERSION=%DPCPP_LLVM_SPIRV_VERSION%"
+
 pushd %SRC_DIR%\package
 %PYTHON% setup.py install --single-version-externally-managed --record=llvm_spirv_record.txt
 type llvm_spirv_record.txt
