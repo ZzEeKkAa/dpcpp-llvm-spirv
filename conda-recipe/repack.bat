@@ -10,6 +10,7 @@ popd
 pushd %SRC_DIR%\compiler
 %PYTHON% -c "import dpcpp_llvm_spirv as p; print(p.get_llvm_spirv_path())" > Output
 set /p DIRSTR= < Output
-copy bin-llvm\llvm-spirv %DIRSTR%
+if not exist Library\bin-llvm\llvm-spirv.exe (exit 1)
+copy Library\bin-llvm\llvm-spirv.exe %DIRSTR%
 del Output
 popd
