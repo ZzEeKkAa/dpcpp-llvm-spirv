@@ -6,7 +6,6 @@ import os
 
 
 def get_llvm_spirv_path():
-
     """Returns the path to llvm-spirv executable
     vendored in this package.
     """
