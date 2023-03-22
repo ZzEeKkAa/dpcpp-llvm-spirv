@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: Proprietary
 
 import os
+import platform
 
 
 def get_llvm_spirv_path():
@@ -10,6 +11,11 @@ def get_llvm_spirv_path():
     vendored in this package.
     """
 
-    result = os.path.dirname(__file__) + "/llvm-spirv"
+    result = os.path.dirname(__file__)
+
+    if platform.system() is "Windows":
+        result += "\llvm-spirv.exe"
+    else:
+        result += "/llvm-spirv"
 
     return result
