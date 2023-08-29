@@ -27,9 +27,9 @@ setup(
     url="https://github.com/IntelPython/dpcpp-llvm-spirv",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
     ],
     license="Intel End User License Agreement for Developer Tools",
 )
