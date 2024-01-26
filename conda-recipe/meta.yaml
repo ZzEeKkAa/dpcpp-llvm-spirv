@@ -1,6 +1,6 @@
-{% set version = "2023.0.0" %}
-{% set intel_build_number = "25370" %}   # [linux]
-{% set intel_build_number = "25922" %}   # [win]
+{% set version = "2023.2.3" %}
+{% set intel_build_number = "20" %}   # [linux]
+{% set intel_build_number = "49531" %}   # [win]
 {% set target_platform = "linux-64" %}  # [linux64]
 {% set target_platform = "win-64" %}    # [win64]
 
@@ -16,8 +16,8 @@ source:
   - path: ../pkg
     folder: package
   - url: https://anaconda.org/intel/dpcpp_impl_{{ target_platform }}/{{ version }}/download/{{ target_platform }}/dpcpp_impl_{{ target_platform }}-{{ version }}-intel_{{ intel_build_number }}.tar.bz2  # [linux64 or win64]
-    md5: 0acd44eea158cf828f7f1058f6fc85da  # [win64]
-    md5: 5217aa49f13b313a0e357aef6a182264  # [linux64]
+    md5: a2f18cd6f94adb67c07d8181d5219fd5  # [win64]
+    md5: 5e5661648089c6260539dd43ff1cdb58  # [linux64]
     folder: compiler
   - path: ..
 
@@ -37,6 +37,9 @@ outputs:
         - setuptools  >=63
       run:
         - python
+      run_constrained:
+        - dpcpp_cpp_rt=={{ version }}=intel_{{ intel_build_number }}
+        - dpcpp_impl_{{target_platform}}-64=={{ version }}=intel_{{ intel_build_number }}
     test:
       script: run_test.py
       imports:

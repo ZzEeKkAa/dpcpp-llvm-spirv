@@ -15,7 +15,6 @@ with open(os.path.join("dpcpp_llvm_spirv", "_version.py"), "w") as fh:
 
 
 setup(
-    name="dpcpp_llvm_spirv",
     packages=[
         "dpcpp_llvm_spirv",
     ],

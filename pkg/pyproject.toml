@@ -1,0 +1,10 @@
+[project]
+name="dpcpp_llvm_spirv"
+dynamic =["version"]
+
+[project.optional-dependencies]
+# setting dpcpp_rt as an optional dependecy, so dependabot can track when new
+# version released.
+dpcpp_rt = [
+    "dpcpp-cpp-rt==2023.0.0",
+]

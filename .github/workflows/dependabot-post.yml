@@ -1,0 +1,47 @@
+name: Update Conda Dependencies
+on:
+  push:
+    branches:
+      - dependabot/pip/**
+  pull_request:
+    branches:
+      - dependabot/pip/**
+
+jobs:
+  run:
+    name: Run pod install
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          activate-environment: ""
+          run-post: false
+
+      - name: Update meta.yaml
+        run: python scripts/search_new_version.py
+
+      - name: Get last commit message
+        id: last-commit
+        run: |
+          echo "message=$(git log -1 --pretty=%s)" >> $GITHUB_OUTPUT
+          echo "author=$(git log -1 --pretty=\"%an <%ae>\")" >> $GITHUB_OUTPUT
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          # Creating same name commit. Unfortunetely we can't amend to previous
+          # comit because dependabot closes PR immediently.
+          commit_author: ${{ steps.last-commit.outputs.author }}
+          commit_message: ${{ steps.last-commit.outputs.message }}
+          # branch: ${{ github.head_ref }}
+          commit_options: '--amend --no-edit'
+          push_options: '--force'
+          skip_fetch: true
