@@ -44,7 +44,7 @@ jobs:
           # Creating same name commit. Unfortunetely we can't amend to previous
           # comit because it introduces problems like missing check and
           # unmaintanable PR by dependabot.
-          commit_author: ${{ steps.last-commit.outputs.author }}
+          # commit_author: ${{ steps.last-commit.outputs.author }}
           commit_message: ${{ steps.last-commit.outputs.message }}
           branch: ${{ github.head_ref }}
           # commit_options: '--amend --no-edit'
