@@ -42,10 +42,11 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           # Creating same name commit. Unfortunetely we can't amend to previous
-          # comit because dependabot closes PR immediently.
+          # comit because it introduces problems like missing check and
+          # unmaintanable PR by dependabot.
           commit_author: ${{ steps.last-commit.outputs.author }}
           commit_message: ${{ steps.last-commit.outputs.message }}
-          # branch: ${{ github.head_ref }}
-          commit_options: '--amend --no-edit'
-          push_options: '--force'
-          skip_fetch: true
+          branch: ${{ github.head_ref }}
+          # commit_options: '--amend --no-edit'
+          # push_options: '--force'
+          # skip_fetch: true
