@@ -21,7 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          ref: ${{ github.head_ref }}
+          # fetch-depth: 2
 
       - name: Setup miniconda
         uses: conda-incubator/setup-miniconda@v2
@@ -46,7 +47,7 @@ jobs:
           # unmaintanable PR by dependabot.
           # commit_author: ${{ steps.last-commit.outputs.author }}
           commit_message: ${{ steps.last-commit.outputs.message }}
-          branch: ${{ github.head_ref }}
+          # branch: ${{ github.head_ref }}
           # commit_options: '--amend --no-edit'
           # push_options: '--force'
           # skip_fetch: true
